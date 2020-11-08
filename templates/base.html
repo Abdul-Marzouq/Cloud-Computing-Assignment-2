@@ -1,29 +1,44 @@
+{%load static%}
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Cloud Computing Assignment 2 Web App{% endblock %}</title>
 </head>
-<body>
+<body style = "background-color:lavender">
+  <center>
   <header>
     <h1>Cloud Computing Assignment 2 Web App</h1>
-    {% if user.is_authenticated %}
-      Hi {{ user.username }}! <br>
-      <a href="{% url 'index' %}">Home</a> <br>
-      {% if user.is_superuser %}
-      <a href="{% url 'imgupload' %}">Upload an image</a> <br>
-      {% endif %}
-      <a href="{% url 'imgsearch' %}">Search for image</a> <br>
-      <a href="{% url 'logout' %}">Logout</a> <br>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a> <br>
-    {% endif %}
   </header>
   <hr>
+      ><a href="{% url 'index' %}">Home</a>&nbsp &nbsp &nbsp &nbsp &nbsp 
+      ><a href="{% url 'instructions' %}">Instructions</a>&nbsp &nbsp &nbsp &nbsp &nbsp 
+      {% if user.is_authenticated %}
+      {% if user.is_superuser %}
+      ><a href="{% url 'imgupload' %}">Upload an image</a> &nbsp &nbsp &nbsp &nbsp &nbsp 
+      ><a href="{% url 'imglist' %}">Delete an image</a> &nbsp &nbsp &nbsp &nbsp &nbsp  
+      {% endif %}
+      ><a href="{% url 'imgsearch' %}">Search for image</a>&nbsp &nbsp &nbsp &nbsp &nbsp  
+      ><a href="{% url 'logout' %}">Logout</a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
+    {% else %}
+      ><a href="{% url 'login' %}">Login</a> &nbsp &nbsp &nbsp &nbsp &nbsp  
+    {% endif %}
+    <hr>
+
+</center>
   <main>
+  
+  <div style = "margin: 50px;">
     {% block content %}
     {% endblock %}
+  </div>
   </main>
   <hr>
+  <footer>
+    Submitted by:
+    <br> Abdul Marzouq, B170263CS
+    <br> B. Amaldev,  B170136CS 
+    </footer>
 </body>
 </html>

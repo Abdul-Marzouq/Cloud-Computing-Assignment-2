@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h3>Image Delete</h3>
+    <table>
+      <tr>
+        <th>Image List:</th>
+      </tr>
+      {% for img in images %}
+        <tr>
+         <td><br><br><img src="{{img.image.url}}" alt="{{img.image.path}}" width="300" height="300"></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'imgdelete' img.id %}">Delete</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+    <br>
+<a href="{% url 'index' %}">Back</a>
+{% endblock %}
+

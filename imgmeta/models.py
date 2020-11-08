@@ -11,7 +11,7 @@ mydb = client["cloudassg2"]
 mycol = mydb["imagemetadata"]
 
 class ImageSet(models.Model):
-    name = models.CharField(max_length = 100,null=True, blank=False,editable=False)
+    id = models.AutoField(primary_key=True)
     image = models.ImageField(upload_to='imgset/', null=True, blank=False)
 
 def getmetadatadict(path):

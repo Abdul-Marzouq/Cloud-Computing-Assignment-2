@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<h2>Image Search Page</h2>
+<h3>Image Search Page</h3>
         <form method="POST" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}
               {{form}}

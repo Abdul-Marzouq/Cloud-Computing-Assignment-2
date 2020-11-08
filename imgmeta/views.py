@@ -14,6 +14,7 @@ def returnimgfrompath(imagenamelist):
     retlist = []
     for name in imagenamelist:
         for img in imageslist:
+            print(img.id)
             if str(img.image.path) == name:
                 retlist.append(img)
                 break
@@ -22,32 +23,47 @@ def returnimgfrompath(imagenamelist):
 # Create your views here.
 def imgsearchres(request,searchstr):
     querystrlist = searchstr.splitlines()
-    #print(querystrlist)
-    querylist = []
-    for st in querystrlist:
-        attr, val = st.split('=')
-        if attr[-1] == " ":
-            attr = attr[:len(attr)-1]
-        if val[0] == " ":
-            val = val[1:]
-        querylist.append({attr:val})
-    if(len(querylist) == 1):
+    isinvalid = False
+    isempty = False
+    imageslist = []
+    if searchstr.count("=") != len(querystrlist):
+        isinvalid = True
+    else:
+        querylist = []
+        for st in querystrlist:
+            attr, val = st.split('=')
+            if attr[-1] == " ":
+                attr = attr[:len(attr)-1]
+            if val[0] == " ":
+                val = val[1:]
+            querylist.append({attr:val})
+        if(len(querylist) == 1):
             query = querylist[0]
-    else:
-            query = {"$or":querylist}
-    print(query)
-    imagequery = mycol.find(query)
-    imagequerylist = []
-    for i in imagequery:
-        imagequerylist.append(i)
-    imagenamelist = [i.get("imgpath") for i in imagequerylist]
-    imageslist = returnimgfrompath(imagenamelist)
-    if len(imageslist)==0:
-        isempty=True
-    else:
-        isempty=False
-    context = {'empty' : isempty, 'images' : imageslist}
+        else:
+                query = {"$or":querylist}
+        print(query)
+        imagequery = mycol.find(query)
+        imagequerylist = []
+        for i in imagequery:
+            imagequerylist.append(i)
+        imagenamelist = [i.get("imgpath") for i in imagequerylist]
+        imageslist = returnimgfrompath(imagenamelist)
+        if len(imageslist)==0:
+            isempty=True
+        else:
+            isempty=False
+    context = {'empty' : isempty, 'invalid': isinvalid, 'images' : imageslist}
     return render(request, 'imgsearchres.html', context)
+
+def imglist(request):
+    images = ImageSet.objects.all()        
+    context = {'images' : images}
+    return render(request, 'imglist.html', context)
+
+def imgdelete(request,delimageid):
+    img = ImageSet.objects.get(id=delimageid)
+    img.delete()
+    return redirect('index')
 
 def imgsearch(request):
     if request.method=='POST':

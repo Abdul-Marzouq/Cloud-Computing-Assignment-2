@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h3>Instructions</h3>
+    <ul>
+        <li>Welcome to the Cloud Computing Assignment 2 Web Application</li><br>
+        <li>The web app consists of 2 modes: admin mode and user mode.</li><br>
+        <li>The admin can upload images and  delete images from the uploaded list of images and also do metadata image query.</li><br>
+        <li>The users can only query for images based on multiple metadata information provided in the below mentioned format:
+            <ul>
+                <li>The attribute name and its value should be provided with an '=' sign in between. For example: Color = 0</li>
+                <li>Multiple key-pair values should be in seperate lines.</li>
+                <li>No other unwanted characters should be there as it will cause an invalid query</li>
+            </ul>
+        </li><br>
+        <li>The metadata of the uploaded images will be located in a seperate data server.</li>
+        </ul>
+  <br><br>
+{% endblock %}
