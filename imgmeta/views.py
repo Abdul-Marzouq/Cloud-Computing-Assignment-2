@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from PIL import Image
 from PIL.ExifTags import TAGS
 from .models import *
@@ -20,7 +21,7 @@ def returnimgfrompath(imagenamelist):
                 break
     return retlist
 
-# Create your views here.
+@login_required(login_url='login')
 def imgsearchres(request,searchstr):
     querystrlist = searchstr.splitlines()
     isinvalid = False
@@ -55,16 +56,19 @@ def imgsearchres(request,searchstr):
     context = {'empty' : isempty, 'invalid': isinvalid, 'images' : imageslist}
     return render(request, 'imgsearchres.html', context)
 
+@login_required(login_url='login')
 def imglist(request):
     images = ImageSet.objects.all()        
     context = {'images' : images}
     return render(request, 'imglist.html', context)
 
+@login_required(login_url='login')
 def imgdelete(request,delimageid):
     img = ImageSet.objects.get(id=delimageid)
     img.delete()
     return redirect('index')
 
+@login_required(login_url='login')
 def imgsearch(request):
     if request.method=='POST':
         form = SearchForm(request.POST)
@@ -80,6 +84,7 @@ def imgsearch(request):
         context = {'form' : form}
         return render(request, 'imgsearch.html', context)
 
+@login_required(login_url='login')
 def imgupload(request):
     if request.method=='POST':
         form = ImageForm(request.POST,request.FILES)
