@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Cloud Computing Assignment 2 Web App{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>Cloud Computing Assignment 2 Web App</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}! <br>
+      <a href="{% url 'index' %}">Home</a> <br>
+      {% if user.is_superuser %}
+      <a href="{% url 'imgupload' %}">Upload an image</a> <br>
+      {% endif %}
+      <a href="{% url 'imgsearch' %}">Search for image</a> <br>
+      <a href="{% url 'logout' %}">Logout</a> <br>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a> <br>
+    {% endif %}
+  </header>
+  <hr>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  <hr>
+</body>
+</html>
