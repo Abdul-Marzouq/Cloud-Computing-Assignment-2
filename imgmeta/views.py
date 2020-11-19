@@ -41,7 +41,7 @@ def imgsearchres(request,searchstr):
         if(len(querylist) == 1):
             query = querylist[0]
         else:
-                query = {"$or":querylist}
+                query = {"$and":querylist}
         print(query)
         imagequery = mycol.find(query)
         imagequerylist = []
